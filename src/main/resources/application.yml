@@ -1,5 +1,9 @@
 server:
   port: 8787
+github:
+  clientId: e769c9db3bb1545ff207
+  clientSecret: fd9d7fc5e90632e92f2c76c37236ffb50e4d5772
+  redirectUrl: http://localhost:8787/callback
 spring:
   application:
     name: demo4
