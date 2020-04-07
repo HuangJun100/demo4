@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的社区</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="icon" href="img/community.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div th:replace="navibar.html :: copy"></div>
+    <div class="container-fluid" style="margin: 40px 100px">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h3 class="add-ques-befor">
+                    <img src="img/add.png" height="30px">
+                    <b>添加问题</b>
+                </h3>
+                <div style="border-top:0.5px solid #ecf0f1"></div>
+                <form class="form-horizontal" action="/addQuestion" method="post">
+                    <div class="form-group">
+                        <img src="/img/title.png" height="20">
+                        <label for="title" class="col-sm-2 control-label">标题</label>
+                        <input type="title" class="form-control question  form-input" name="title" id="title" th:value="${title}"placeholder="标题">
+                    </div>
+                    <div class="form-group">
+                        <img src="/img/describ.png" height="20">
+                        <label for="question" class="col-sm-2 control-label">输入问题描述</label>
+                        <textarea th:text="${question}" class="form-control question form-input" th:rows="20" name = "question" id="question" placeholder="输入问题描述" rows="6"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <img src="/img/tag.png" height="20px">
+                        <label for="tag" class="col-sm-2 control-label">标签</label>
+                        <input type="tag" th:value="${tag}" class="form-control question form-input" name = "tag" id="tag" placeholder="标签">
+                    </div>
+                    <span th:if="${error ne null}" class="alert-danger" role = alert th:text="${error}"></span>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">发布</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <h3>问题发起指南：</h3>
+                <h4>问题标题：请用精简的文字描述你的问题</h4>
+                <h4>问题内容：请详细描述您的问题</h4>
+                <h4>问题标签：每个问题标签请用逗号隔开</h4>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

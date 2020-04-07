@@ -1,0 +1,29 @@
+.big-form{
+    margin: 20px 30px;
+    border: 1px #636e72 solid;
+    border-radius: 10px/10px;
+    height: 600px;
+    padding: 50px 100px;
+    position: absolute;
+    left:50%;
+    top:40%;
+    transform: translate(-50%,-50%);
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 20px;
+}
+.first-input input{
+    border: 1.5px #2d3436 solid;
+    border-radius: 4px/4px;
+    padding: 5px;
+    margin: 5px;
+}
+.first-input textarea{
+    border: 1.5px #2d3436 solid;
+    border-radius: 4px/4px;
+    padding: 5px;
+    margin: 5px;
+}
+.submit{
+    padding: 5px;
+    margin: 5px;
+}

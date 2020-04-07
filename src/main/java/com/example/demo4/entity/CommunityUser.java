@@ -1,5 +1,8 @@
 package com.example.demo4.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -31,6 +34,11 @@ public class CommunityUser {
      */
     private String githubBio;
     /**
+     * 用户头像地址
+     */
+    @TableField(value = "head_img_url")
+    private String avatarUrl;
+    /**
      * 用户cookie
      */
     private String token;
@@ -42,5 +50,16 @@ public class CommunityUser {
      * 更新时间
      */
     private Date updateTime;
-
+    /**
+     * 生日
+     */
+    private Date birthDate;
+    /**
+     * 邮箱
+     */
+    private String email;
+    /**
+     * 密码
+     */
+    private String password;
 }

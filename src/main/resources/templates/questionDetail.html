@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的社区</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="icon" href="img/community.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="navibar.html :: copy"></div>
+<div class="container-fluid" style="margin: 40px 100px">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div class="media">
+                <div class="media-left">
+                    <img class="media-object img-circle" height="30px" src="${question.avatarUrl}">
+                </div>
+                <div class="media-body" style="border-bottom: solid 1px #ecf0f1;margin: 30px 10px">
+                    <h2 class="media-heading" style="color: #34495e" th:text="${question.title}">这是标题</h2>
+                    <span style="height: 18px;color: #e74c3c"><img src="/img/阅读.png" height="18px"><span th:text="${question.readCount!=null}?${question.readCount}:0"></span>阅读·</span>
+                    <span style="height: 18px;color: #f1c40f"><img src="/img/点赞.png" height="18px"><span th:text="${question.likeCount!=null}?${question.likeCount}:0"></span>点赞·</span>
+                    <span style="height: 18px;color: #16a085"><img src="/img/日期.png" height="18px"><span th:text="${#dates.format(question.createTime,'yyyy年MMMdd日 HH时mm分')}"></span>发布</span>
+                </div>
+            </div>
+            <div style="border-bottom:#95a5a6 solid 1px;margin: 30px 30px">
+                <p th:each="quesDetail:${#strings.arraySplit(question.getQuestion(),'\n|\r| ')}" th:text="${quesDetail}" style="text-indent: 18px;line-height: 25px"></p>
+            </div>
+            <div  style="border-bottom:#95a5a6 solid 1px;margin: 10px 10px">
+                <span th:each="tag:${#strings.arraySplit(question.getTag(),',|，')}" class="label label-default" th:text="${tag}">Default</span>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+<!--            <h3>问题发起指南：</h3>-->th:each="tag1:${#strings.arraySplit(tag,'，')}"
+<!--            <h4>问题标题：请用精简的文字描述你的问题</h4>-->
+<!--            <h4>问题内容：请详细描述您的问题</h4>-->
+<!--            <h4>问题标签：每个问题标签请用逗号隔开</h4>-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

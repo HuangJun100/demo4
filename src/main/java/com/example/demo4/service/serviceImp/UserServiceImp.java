@@ -30,4 +30,11 @@ public class UserServiceImp implements UserService {
         queryWrapper.eq("token",cookie);
         return communityUserMapper.selectOne(queryWrapper);
     }
+
+    @Override
+    public CommunityUser selectUserByGithubId(Long id) {
+        QueryWrapper<CommunityUser> queryWrapper = new QueryWrapper<CommunityUser>();
+        queryWrapper.eq("github_id",id);
+        return communityUserMapper.selectOne(queryWrapper);
+    }
 }

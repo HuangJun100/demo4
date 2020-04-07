@@ -13,4 +13,11 @@ public interface UserService {
      * 通过cookie查询用户
      */
     public CommunityUser selectUserByCookie(String cookie);
+
+    /**
+     * 通过ID查询用户
+     * @param id
+     * @return
+     */
+    public CommunityUser selectUserByGithubId(Long id);
 }

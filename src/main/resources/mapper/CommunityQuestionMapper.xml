@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo4.mapper.CommunityQuestionMapper">
+
+    <resultMap id="questionDto" type="com.example.demo4.dto.QuestionDto">
+        <result column="head_img_url" property="avatarUrl"></result>
+    </resultMap>
+    
+    <select id="getQuesList" resultType="com.example.demo4.dto.QuestionDto" resultMap="questionDto">
+        SELECT q.*,c.github_name,c.head_img_url FROM community_user c , question q WHERE c.id = q.author order by q.create_time desc
+    </select>
+
+    <select id="getQuestionById" resultType="com.example.demo4.dto.QuestionDto"  resultMap="questionDto">
+        SELECT * FROM question q , community_user c WHERE q.id = #{id} AND q.author=c.id
+    </select>
+</mapper>

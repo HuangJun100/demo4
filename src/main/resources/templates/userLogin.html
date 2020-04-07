@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>我的社区</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="icon" href="img/community.png">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:replace="navibar.html :: copy"></div>
+<div class="container-fluid" style="margin: 40px 100px">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <div>
+                <h3>用户登录</h3>
+                <div>
+                    <form action="/userLogin" method="post">
+                        <div>
+                            <input type="text" name="username" placeholder="用户名">
+                        </div>|
+                        <div>
+                            <input type="password" name="password" placeholder="密码">
+                        </div>
+                        <div>
+                            <input type="submit">
+                        </div>
+                    </form>
+<!--                    <div th:if="${msgBackFull ne null}" class="alert alert-danger" role="alert" th:text="${msgBackFull}">...</div>-->
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <h3>用户登录指南：</h3>
+            <ul>
+                <li>可选用github授权登录或者用户名密码登录</li>
+                <li><strong>密码仅可用大小字母和数字</strong></li>
+                <li>必须全部填写，否则登录失败</li>
+            </ul>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

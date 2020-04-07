@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:style="http://www.w3.org/1999/xhtml">
 <head>
     <title>我的社区</title>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-
+    <link rel="icon" href="img/community.png">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -11,57 +11,70 @@
     <script src="js/bootstrap.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-default">
-        <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">首页</a>
-            </div>
 
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">问答 <span class="sr-only">(current)</span></a></li>
-                    <li><a href="#">内容</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">其他 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">Separated link</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="查找内容">
+    <div th:replace="navibar.html :: copy"></div>
+
+    <div class="container-fluid" style="margin: 40px 100px">
+        <div class="row">
+            <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+                <h2 style="border-bottom:#95a5a6 solid 2px"><span class="glyphicon glyphicon-list"></span>问题列表</h2>
+                <div class="media" th:each="question:${pages.getRecords()}">
+                    <div class="media-left">
+                        <img class="media-object img-circle" height="30px" src="${question.avatarUrl}">
                     </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
-                <div class="nav navbar-nav navbar-right">
-                    <li th:if="${session.user eq null}"><a href="https://github.com/login/oauth/authorize?client_id=e769c9db3bb1545ff207&redirect_uri=http://localhost:8787/callback&scope=user&state=1">登录</a></li>
-                    <li th:if="${session.user ne null}" class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" th:text="${session.user.getGithubName()}"> <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">消息</a></li>
-                            <li><a href="#">个人资料</a></li>
-                            <li><a href="#"></a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="#">退出登录</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div><!-- /.container-fluid -->
-    </nav>
+                    <div class="media-body" style="border-bottom: solid 1px #ecf0f1">
+                        <a th:href="@{http://localhost:8787/questiondetail(questionId=${question.getId()})}">
+                            <h4 class="media-heading" style="color: #34495e" th:text="${question.title}"></h4>
+                        </a>
+                        <span style="height: 18px;color: #e74c3c"><img src="/img/阅读.png" height="18px">
+                            <span th:text="${question.readCount!=null}?${question.readCount}:0"></span>阅读·</span>
+                        <span style="height: 18px;color: #f1c40f"><img src="/img/点赞.png" height="18px">
+                            <span th:text="${question.likeCount!=null}?${question.likeCount}:0"></span>点赞·</span>
+                        <span style="height: 18px;color: #16a085"><img src="/img/日期.png" height="18px">
+                            <span th:text="${#dates.format(question.createTime,'yyyy年MMMdd日 HH时mm分')}"></span>发布</span>
+                    </div>
+                </div>
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li th:if="${pages.getCurrent() ge 2}">
+                            <a th:href="@{http://localhost:8787/page(pageNum=${pages.getCurrent()-1})}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+<!--                        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>-->
+                        <li th:if="${pages.getCurrent() gt 2}">
+                            <a th:href="@{http://localhost:8787/page(pageNum=${pages.getCurrent()-2})}">
+                                <span th:text="${pages.getCurrent()-2}"></span></a>
+                        </li>
+                        <li th:if="${pages.getCurrent() gt 1}">
+                            <a th:href="@{http://localhost:8787/page(pageNum=${pages.getCurrent()-1})}">
+                                <span th:text="${pages.getCurrent()-1}"></span></a>
+                        </li>
+                        <li  class="active">
+                            <span th:text="${pages.getCurrent()}"></span></a>
+                        </li>
+                        <li th:if="${pages.getCurrent()+1 le pages.getPages()}">
+                            <a th:href="@{http://localhost:8787/page(pageNum=${pages.getCurrent()+1})}">
+                                <span th:text="${pages.getCurrent()+1}"></span></a>
+                        </li>
+                        <li th:if="${pages.getCurrent()+2 le pages.getPages()}">
+                            <a th:href="@{http://localhost:8787/page(pageNum=${pages.getCurrent()+2})}">
+                            <span th:text="${pages.getCurrent()+2}"></span></a>
+                        </li>
+                        <li th:if="${pages.getCurrent() lt pages.getPages()}">
+                            <a th:href="@{http://localhost:8787/page(pageNum=${pages.getCurrent()+1})}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+                <div>
+                    <strong th:height="30px">热门话题</strong>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

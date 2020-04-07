@@ -45,30 +45,43 @@ public class AuthorizeController {
 
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO(
                 clientId,clientSecret,code,redirectUrl,state);
-
+        /**
+         * 获取GitHub授权登录
+         */
         String accessToken = githubProvider.GetAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.GetUserByToken(accessToken);
 
-        Long userId = githubUser.getId();
-        if (userId != null) {
-            //登陆成功
-            /**
-             * 生成UUID cookie
-             */
-            String communityCookie = UUID.randomUUID().toString();
+        System.out.println(githubUser);
+        /**
+         * 获取授权成功后，和本地数据对比后存在就直接登录，否则存入数据库后登陆
+         */
+        if (githubUser != null) {
+            Long githubId = githubUser.getId();
+            CommunityUser communityUser0 = userService.selectUserByGithubId(githubId);
+            String communityCookie;
+            if(communityUser0==null) {
+                //登陆成功
+                /**
+                 * 生成UUID cookie
+                 */
 
-            CommunityUser communityUser = new CommunityUser();
-            communityUser.setGithubBio(githubUser.getBio());
-            communityUser.setGithubId(githubUser.getId());
-            communityUser.setGithubName(githubUser.getName());
-            communityUser.setToken(communityCookie);
-            communityUser.setCreateTime(new Date());
-            userService.addUser(communityUser);
+                CommunityUser communityUser = new CommunityUser();
+                communityUser.setGithubId(githubUser.getId());
+                communityUser.setGithubName(githubUser.getName());
+                communityUser.setGithubBio(githubUser.getBio());
+                communityUser.setAvatarUrl(githubUser.getAvatarUrl());
+                communityCookie = UUID.randomUUID().toString();
+                communityUser.setToken(communityCookie);
+                communityUser.setCreateTime(new Date());
+                userService.addUser(communityUser);
+            }else {
+                communityCookie = communityUser0.getToken();
+            }
             /**
-             * 生成指定的cookie
+             * 将cookie传给浏览器
              */
             httpServletResponse.addCookie(new Cookie("userCookie",communityCookie));
-           // httpServletRequest.getSession().setAttribute("user",githubUser);
+
             return "redirect:/";
         } else {
             //登录失败
